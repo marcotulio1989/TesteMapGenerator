@@ -468,13 +468,20 @@ const App: React.FC = () => {
     const drawCity = useCallback((segments: Segment[]) => {
         if (!segmentsContainerRef.current) return;
         segmentsContainerRef.current.removeChildren();
-        const graphics = new PIXI.Graphics();
+
+        const highwayGraphics = new PIXI.Graphics();
+        const roadGraphics = new PIXI.Graphics();
+
         for (const seg of segments) {
-            graphics.lineStyle(seg.width, seg.q.highway ? 0xd3d3d3 : 0x666666);
+            const graphics = seg.q.highway ? highwayGraphics : roadGraphics;
             graphics.moveTo(seg.r.start.x, seg.r.start.y);
             graphics.lineTo(seg.r.end.x, seg.r.end.y);
         }
-        segmentsContainerRef.current.addChild(graphics);
+
+        highwayGraphics.stroke({ width: 16, color: 0xFFFF00 });
+        roadGraphics.stroke({ width: 6, color: 0xFFFFFF });
+
+        segmentsContainerRef.current.addChild(highwayGraphics, roadGraphics);
     }, []);
     
     const drawBuildings = useCallback((segments: Segment[], qTree: Quadtree) => {
@@ -557,7 +564,7 @@ const App: React.FC = () => {
             await pixiApp.init({
                 width: container.clientWidth,
                 height: container.clientHeight,
-                backgroundColor: 0x4F7942,
+                backgroundColor: 0x1e2c1e,
                 antialias: true,
                 resolution: window.devicePixelRatio || 1,
                 autoDensity: true
