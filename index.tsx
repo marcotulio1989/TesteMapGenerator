@@ -470,9 +470,12 @@ const App: React.FC = () => {
         segmentsContainerRef.current.removeChildren();
         const graphics = new PIXI.Graphics();
         for (const seg of segments) {
-            graphics.lineStyle(seg.width, seg.q.highway ? 0xd3d3d3 : 0x666666);
             graphics.moveTo(seg.r.start.x, seg.r.start.y);
             graphics.lineTo(seg.r.end.x, seg.r.end.y);
+            graphics.stroke({
+                width: seg.width,
+                color: seg.q.highway ? 0xd3d3d3 : 0x666666,
+            });
         }
         segmentsContainerRef.current.addChild(graphics);
     }, []);
@@ -645,12 +648,16 @@ const App: React.FC = () => {
                     if (pathPointsRef.current.length === 2) {
                         const path = pathfinding.find(pathPointsRef.current[0], pathPointsRef.current[1]);
                         const pathGraphic = new PIXI.Graphics();
-                        pathGraphic.lineStyle(8 / worldRef.current.scale.x, 0xff0000, 0.7);
                         if (path.length > 0) {
                             pathGraphic.moveTo(path[0].r.start.x, path[0].r.start.y);
-                            for(const p of path) {
-                                 pathGraphic.lineTo(p.r.end.x, p.r.end.y);
+                            for (const p of path) {
+                                pathGraphic.lineTo(p.r.end.x, p.r.end.y);
                             }
+                            pathGraphic.stroke({
+                                width: 8 / worldRef.current.scale.x,
+                                color: 0xff0000,
+                                alpha: 0.7,
+                            });
                         }
                         pathContainerRef.current?.addChild(pathGraphic);
 
