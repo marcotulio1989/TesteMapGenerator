@@ -469,8 +469,9 @@ const App: React.FC = () => {
         if (!segmentsContainerRef.current) return;
         segmentsContainerRef.current.removeChildren();
         const graphics = new PIXI.Graphics();
+        const scale = worldRef.current?.scale.x ?? 1;
         for (const seg of segments) {
-            graphics.lineStyle(seg.width, seg.q.highway ? 0xd3d3d3 : 0x666666);
+            graphics.lineStyle(seg.width / scale, seg.q.highway ? 0xd3d3d3 : 0x666666);
             graphics.moveTo(seg.r.start.x, seg.r.start.y);
             graphics.lineTo(seg.r.end.x, seg.r.end.y);
         }
