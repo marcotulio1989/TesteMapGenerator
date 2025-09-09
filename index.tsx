@@ -470,7 +470,7 @@ const App: React.FC = () => {
         segmentsContainerRef.current.removeChildren();
         const graphics = new PIXI.Graphics();
         for (const seg of segments) {
-            graphics.lineStyle(seg.width, seg.q.highway ? 0x_d3d3d3 : 0x_666666);
+            graphics.lineStyle(seg.width, seg.q.highway ? 0xd3d3d3 : 0x666666);
             graphics.moveTo(seg.r.start.x, seg.r.start.y);
             graphics.lineTo(seg.r.end.x, seg.r.end.y);
         }
@@ -481,7 +481,7 @@ const App: React.FC = () => {
         if (!buildingsContainerRef.current) return;
         buildingsContainerRef.current.removeChildren();
         const graphics = new PIXI.Graphics();
-        graphics.beginFill(0x_333333);
+        graphics.beginFill(0x333333);
         
         segments.forEach(seg => {
             if (random.random() < 0.2) { // Place buildings near some segments
