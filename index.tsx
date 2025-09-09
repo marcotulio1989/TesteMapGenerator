@@ -470,7 +470,7 @@ const App: React.FC = () => {
         segmentsContainerRef.current.removeChildren();
         const graphics = new PIXI.Graphics();
         for (const seg of segments) {
-            graphics.lineStyle(seg.width, seg.q.highway ? 0xd3d3d3 : 0x666666);
+            graphics.lineStyle(seg.width, seg.q.highway ? 0xffffff : 0x000000);
             graphics.moveTo(seg.r.start.x, seg.r.start.y);
             graphics.lineTo(seg.r.end.x, seg.r.end.y);
         }
@@ -576,11 +576,11 @@ const App: React.FC = () => {
             heatmapContainerRef.current = new PIXI.Graphics();
             world.addChild(heatmapContainerRef.current);
 
-            segmentsContainerRef.current = new PIXI.Container();
-            world.addChild(segmentsContainerRef.current);
-
             buildingsContainerRef.current = new PIXI.Container();
             world.addChild(buildingsContainerRef.current);
+
+            segmentsContainerRef.current = new PIXI.Container();
+            world.addChild(segmentsContainerRef.current);
             
             pathContainerRef.current = new PIXI.Container();
             world.addChild(pathContainerRef.current);
